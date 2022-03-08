@@ -1,0 +1,10 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "BelieveSendEmail"
+s3_bucket = "satyalambdacode"
+s3_prefix = "BelieveSendEmail"
+region = "us-west-1"
+capabilities = "CAPABILITY_IAM"
+image_repositories = []

@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  BelieveSendEmail
+
+  Sample SAM Template for BelieveSendEmail
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 20
+
+Resources:
+  ProcessDynamoDBStream:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: ProcessBelieveUserRecordFunction
+      Description: Sends email on new insert or update
+      CodeUri: ProcessUserRecordFunction
+      Handler: com.believe.ProcessUserRecordsApp::handleRequest
+      Runtime: java8
+      MemorySize: 512
+      Policies: AWSLambdaDynamoDBExecutionRole
+      Events:
+        Stream:
+          Type: DynamoDB
+          Properties:
+            Stream: 'arn:aws:dynamodb:us-west-1:470521481974:table/User/stream/2022-03-08T18:56:22.303'
+            BatchSize: 100
+            StartingPosition: TRIM_HORIZON
